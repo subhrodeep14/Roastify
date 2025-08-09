@@ -1,172 +1,211 @@
 "use client"
-import { useState } from "react";
+import { Eraser, FireExtinguisher, Image, ImageDown, Sparkles } from 'lucide-react';
+
+import React, { useState } from 'react'
+import axios from 'axios'
 import Link from "next/link";
+import Images from "next/image";
+import { useRouter } from "next/navigation";
 
-export default function GalleryPage() {
+
+
+//axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+
+const Roast = () => {
+
+
+  
+  const [loading, setLoading] = useState(false)
+  const [content, setContent] = useState('')
+   const [file, setFile] = useState<File | null>(null);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]); // ✅ file state matches type File | null
+    }
+  }
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const router = useRouter();
 
-  // Single featured AI generated image
-  const featuredImage = {
-    id: 1,
-    imageUrl: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=800',
-    title: 'AI Generated Masterpiece',
-    description: 'A stunning AI-generated artwork that showcases the incredible potential of artificial intelligence in creative expression.',
-    date: '2025-01-15',
-    likes: 42,
-    shares: 8
-  };
+  // const onSubmitHandler = async (e) => {
+  //   e.preventDefault();
+  //   // try {
+  //   //   setLoading(true)
 
-  const handleShare = (platform: string) => {
-    const shareUrl = encodeURIComponent(window.location.href);
-    const shareText = encodeURIComponent(`Check out this amazing AI-generated image: ${featuredImage.title}`);
-    
-    let shareLink = '';
-    switch (platform) {
-      case 'twitter':
-        shareLink = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
-        break;
-      case 'facebook':
-        shareLink = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
-        break;
-      case 'linkedin':
-        shareLink = `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
-        break;
-      case 'whatsapp':
-        shareLink = `https://wa.me/?text=${shareText}%20${shareUrl}`;
-        break;
-    }
-    
-    if (shareLink) {
-      window.open(shareLink, '_blank', 'width=600,height=400');
-    }
-  };
+  //   //   const fromData = new FormData()
 
+  //   //   fromData.append('image',inputValue);
+
+  //   //   const { data } = await axios.post('/api/ai/remove-image-background', fromData,
+  //   //     { headers: { Authorization: `Bearer ${await getToken()}` } }
+  //   //   )
+
+  //   //   if (data.success) {
+  //   //     setContent(data.content)
+  //   //   } else {
+  //   //     toast.error(data.message)
+  //   //   }
+  //   // } catch (error) {
+  //   //   toast.error(data.message)
+  //   // }
+  //   // setLoading(false)
+  // }
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
-      {/* Navbar */}
-      <nav className="bg-white/10 backdrop-blur-md shadow-sm border-b border-white/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+    <div className='h-full overflow-y-scroll p-6 flex items-start justify-center flex-wrap gap-4 text-slate-700 bg-[#F9FAFB] min-h-screen'>
+      <nav className="flex items-center justify-between  w-full md:px-16 lg:px-24 xl:px-32  relative z-10">
+           
+        <a onClick={() => router.push("/")}>
             {/* Logo */}
-            <div className="flex items-center">
-              <Link href="/" className="text-xl font-bold text-white">
-                Roast My Life
-              </Link>
-            </div>
+            <Images src="/roastify logo.png" alt="Roast My Life" width={157} height={40} className="w-full h-[90px]" />
+          </a>
 
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-white/80 hover:text-white transition-colors">
-                Home
-              </Link>
-              <Link href="/gallery" className="text-white font-medium">
-                Gallery
-              </Link>
-              <Link href="#" className="text-white/80 hover:text-white transition-colors">
-                About
-              </Link>
-              <Link href="#" className="text-white/80 hover:text-white transition-colors">
-                Contact
-              </Link>
-            </div>
+          {/* Menu */}
+          <div
+            id="menu"
+            className={`max-md:absolute max-md:bg-white/95 max-md:h-[785px] ${
+              isMenuOpen ? "max-md:w-full" : "max-md:w-0"
+            } max-md:overflow-hidden max-md:transition-[width] max-md:duration-300 max-md:top-0 max-md:left-0 max-md:flex-col max-md:justify-center max-md:text-lg max-md:backdrop-blur flex items-center gap-8 font-medium`}
+          >
+            <Link href="/" className="text-gray-700 text-xl font-semibold hover:text-[#FF6A3D] transition-colors">Home</Link>
+            <Link href="/gallery" className="text-gray-700  text-xl font-semibold hover:text-[#FF6A3D] transition-colors">Gallery</Link>
+            {/* <a href="#" className="text-gray-700 hover:text-[#FF6A3D] transition-colors">Team</a>
+            <a href="#" className="text-gray-700 hover:text-[#FF6A3D] transition-colors">Pricing</a>
+            <a href="#" className="text-gray-700 hover:text-[#FF6A3D] transition-colors">Docs</a> */}
 
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-white hover:text-white/80"
+            {/* Close Button */}
+            <button
+              aria-label="close menu"
+              className="size-6 md:hidden"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+            
           </div>
 
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-white/20">
-                <Link href="/" className="block px-3 py-2 text-white/80 hover:text-white">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-200">
+                <Link href="/" className="block px-3 py-2 text-gray-700 hover:text-[#FF6A3D]">
                   Home
                 </Link>
-                <Link href="/gallery" className="block px-3 py-2 text-white font-medium">
+                <Link href="/gallery" className="block px-3 py-2 text-gray-700 hover:text-[#FF6A3D]">
                   Gallery
                 </Link>
-                <Link href="#" className="block px-3 py-2 text-white/80 hover:text-white">
-                  About
-                </Link>
-                <Link href="#" className="block px-3 py-2 text-white/80 hover:text-white">
-                  Contact
-                </Link>
+                {/* <a href="#" className="block px-3 py-2 text-gray-700 hover:text-[#FF6A3D]">
+                  Team
+                </a>
+                <a href="#" className="block px-3 py-2 text-gray-700 hover:text-[#FF6A3D]">
+                  Pricing
+                </a>
+                <a href="#" className="block px-3 py-2 text-gray-700 hover:text-[#FF6A3D]">
+                  Docs
+                </a> */}
               </div>
             </div>
           )}
-        </div>
-      </nav>
 
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-white mb-6">
-            Featured AI Creation
-          </h1>
-          <p className="text-xl text-white/80 max-w-2xl mx-auto">
-            Experience the power of artificial intelligence in art and creativity.
-          </p>
-        </div>
+          {/* Get Started Button */}
+          <button className="max-md:hidden px-6 py-2 bg-gradient-to-r from-[#FF6A3D] to-[#FF9671] text-white hover:from-[#FF5A2D] hover:to-[#FF8671] transition-all active:scale-95 rounded-full border border-transparent shadow-lg hover:shadow-xl">
+            Get Stared
+          </button>
 
-        {/* Single Featured Image */}
-        <div className="flex justify-center">
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full">
-            {/* Image */}
-            <div className="relative">
-              <img
-                src={featuredImage.imageUrl}
-                alt={featuredImage.title}
-                className="w-full h-96 md:h-[500px] object-cover"
-              />
-              <div className="absolute top-6 right-6">
-                <button className="bg-white/20 backdrop-blur-sm rounded-full p-3 hover:bg-white/30 transition-colors">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                </button>
-              </div>
+          {/* Menu Open Button */}
+          <button
+            aria-label="menu burger"
+            className="size-6 md:hidden"
+            onClick={() => setIsMenuOpen(true)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M3 12h18M3 18h18M3 6h18" />
+            </svg>
+          </button>
+
+        </nav>
+      
+      {/* left col */}
+      <form  className='w-full  md:w-1/3 p-4 bg-white rounded-lg border border-gray-200'>
+        <div className='flex items-center gap-3'>
+          <Sparkles className='w-6 font-bold text-[#FF4938]' /> 
+          <h1 className='text-xl font-semibold'>Make Fun</h1>
+        </div>
+        <p className='mt-6 text-sm font-medium'>Upload Image</p>
+         <div className="bg-white/60 rounded-2xl">
+            <label className="flex flex-col items-center justify-center w-full mb-5 h-40 rounded-xl cursor-pointer bg-white/60 backdrop-blur-md hover:border-amber-400 hover:bg-amber-50 transition">
+            <input onChange={handleChange} type="file" accept="image/*" className="hidden" />
+            <div className="flex flex-col items-center gap-2">
+            <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-10 h-10 text-amber-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+            >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h3l2-3h6l2 3h3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 11a3 3 0 100 6 3 3 0 000-6z" />
+        </svg>
+        <p className="text-sm font-medium text-gray-700">Click or drag image here</p>
+        <p className="text-xs text-gray-500">PNG, JPG, WebP — max 5MB</p>
+        </div>
+        </label>
+
             </div>
 
-            {/* Content */}
-            <div className="p-8">
-              <h3 className="text-3xl font-bold text-white mb-4">
-                {featuredImage.title}
-              </h3>
-              <p className="text-white/80 text-lg mb-6">
-                {featuredImage.description}
-              </p>
-              
-              {/* Stats */}
-              <div className="flex items-center justify-between text-white/60 mb-8">
-                <span className="text-lg">❤️ {featuredImage.likes}</span>
-                <span className="text-lg">📅 {featuredImage.date}</span>
-              </div>
+        <button disabled={loading} className='w-full flex items-center justify-center gap-2 px-4 py-2 mt-6 text-sm text-white  bg-gradient-to-r from-[#F6AB41] to-[#FF4938] rounded-lg cursor-pointer'>
+          {loading?<span className='w-4 h-4 my-1 rounded-full border-2 border-t-transparent animate-spin'></span>:
+          <Image className='w-5' />}
+          Roast It
+        </button>
 
-              {/* Share Button */}
-              <div className="flex justify-center">
-                <button
-                  onClick={() => handleShare('twitter')}
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
-                >
-                  <svg className="w-6 h-6 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                  Share This Creation
-                </button>
-              </div>
-            </div>
+      </form>
+
+
+      {/* right col */}
+      <div className='w-full md:w-1/2  bg-white rounded-lg flex flex-col border border-gray-200 p-4 min-h-96 '>
+        <div className='flex items-center gap-3'>
+          <ImageDown className='size-5 text-[#FF4938]' />
+          <h1 className='text-xl font-semibold'>Processes Image</h1>
+        </div>
+            {
+              !content ?( <div className='flex-1 flex justify-center items-center'>
+          <div className='text-sm flex flex-col items-center gap-5 text-gray-500'>
+            <Image className='w-9 h-9' />
+            <p>Upload a image and click "Roast It" to process your image</p>
           </div>
-        </div>
+        </div>):(
+          <img src={content} alt="image" className='mt-3  w-full h-full' />
+        )
+            }
+       
+
       </div>
     </div>
-  );
+  )
 }
+
+export default Roast

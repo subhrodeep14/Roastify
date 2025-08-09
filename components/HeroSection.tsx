@@ -8,13 +8,10 @@ export default function HeroSection() {
   const router = useRouter();
   return (
     <section className="bg-[#F9FAFB] min-h-screen">
-      <main className="flex items-center flex-col justify-between bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB] text-sm text-gray-800 max-md:px-4 text-center h-[785px] relative overflow-hidden">
+      <main className="flex items-center flex-col  bg-gradient-to-br from-[#F9FAFB] via-white to-[#F9FAFB] text-sm text-gray-800 max-md:px-4 text-center h-[785px] relative overflow-hidden">
         
         {/* Background Pattern */}
-        {/* <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-[#eedcad] to-[#FF9671] rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-l from-[#FF9671] to-[#FF6A3D] rounded-full blur-3xl"></div>
-        </div> */}
+      
         <div className="absolute inset-0 opacity-40 pointer-events-none">
   {/* Top Left Glow */}
   <div className="absolute top-16 left-12 w-80 h-80 bg-gradient-to-br from-[#fef3c7] via-[#fbcfe8] to-[#fca5a5] rounded-full blur-3xl animate-pulse"></div>
@@ -121,99 +118,25 @@ export default function HeroSection() {
           </button>
 
         </nav>
+        
 
         {/* Main Content */}
-        <div className="flex flex-col items-center justify-center w-full relative z-10">
+        <div className="flex flex-col items-center justify-center mt-20 w-full relative z-10">
+          
+        <div className="flex items-center space-x-2.5 border border-orange-500/30 rounded-full mb-20 bg-orange-500/10 p-1 text-sm text-gray-800">
+            <div className="bg-white border bg-gradient-to-r from-[#FF6A3D] to-[#FF9671] text-white border-gray-500/30 rounded-2xl px-3 py-1">
+                <p >Puch AI</p>
+            </div>
+            <p className="pr-3">Ready to roast, let's try</p>
+        </div>
           <h1 className="text-4xl md:text-[40px] font-bold text-gray-900 mb-6">
-          Make Them Laugh. Every. Single. Time.
+          Turn Your Pic Into a Comedy Masterpiece
           </h1>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl">
-          Roastify transforms plain ideas into clever, scroll-stopping roasts — instantly.
+          Upload. Roast. Laugh till you cry — all in seconds.
           </p>
 
-          {/* Textarea Box */}
-          <div className="max-w-xl w-full  rounded-xl overflow-hidden bg-transparent mt-4 ">
-            <div className="bg-white/60 rounded-2xl">
-            <label className="flex flex-col items-center justify-center w-full mb-5 h-40 rounded-xl cursor-pointer bg-white/60 backdrop-blur-md hover:border-amber-400 hover:bg-amber-50 transition">
-            <input type="file" accept="image/*" className="hidden" />
-            <div className="flex flex-col items-center gap-2">
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-10 h-10 text-amber-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-            >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h3l2-3h6l2 3h3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 11a3 3 0 100 6 3 3 0 000-6z" />
-        </svg>
-        <p className="text-sm font-medium text-gray-700">Click or drag image here</p>
-        <p className="text-xs text-gray-500">PNG, JPG, WebP — max 5MB</p>
-        </div>
-        </label>
-
-            </div>
-          <div className=" bg-white/90 rounded-2xl">
-            <textarea
-              className="w-full p-4 pb-0 resize-none outline-none bg-transparent text-gray-800 placeholder-gray-500"
-              placeholder="Tell us about your idea"
-              rows={3}
-            />
-            <div className="flex items-center justify-between pb-4 px-4">
-              <button
-                className="flex items-center justify-center bg-gray-100 p-2 rounded-full size-8 hover:bg-gray-200 transition-colors"
-                aria-label="Add"
-              >
-                <svg
-                  width="11"
-                  height="11"
-                  viewBox="0 0 11 11"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 5.5h9M5.5 1v9"
-                    stroke="#9CA3AF"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <button
-                className="flex items-center justify-center p-2 rounded-full size-8 bg-gradient-to-r from-[#FF6A3D] to-[#FF9671] hover:from-[#FF5A2D] hover:to-[#FF8671] transition-all shadow-md hover:shadow-lg"
-                aria-label="Send"
-              >
-                <svg
-                  width="11"
-                  height="12"
-                  viewBox="0 0 11 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 5.5 5.5 1 10 5.5m-4.5 5.143V1"
-                    stroke="#fff"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-          </div>
-
-          {/* Suggestions */}
-          {/* <div className="grid grid-cols-2 gap-4 mt-8 text-gray-500 max-w-2xl">
-            <p className="cursor-pointer hover:text-[#FF6A3D] transition-colors">
-              How do I write a resume or cover letter?
-            </p>
-            <p className="cursor-pointer hover:text-[#FF6A3D] transition-colors">How do I improve my writing skills?</p>
-            <div className="w-full h-px bg-gray-200"></div>
-            <div className="w-full h-px bg-gray-200"></div>
-            <p className="cursor-pointer hover:text-[#FF6A3D] transition-colors">Can you translate something for me?</p>
-            <p className="cursor-pointer hover:text-[#FF6A3D] transition-colors">How can I be more productive?</p>
-          </div> */}
+    
 
           {/* Gallery CTA */}
           <div className="mt-8">
@@ -224,7 +147,7 @@ export default function HeroSection() {
               <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              Roast It
+              Try it Now
             </Link>
           </div>
         </div>
